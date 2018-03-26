@@ -15,6 +15,7 @@ X1 = ones(n , 1);
 while(sum(abs(X-X1)) >= delta)
     X1 = X;
     %Obliczamy pomocnicz¹ zmienn¹ W = UX-B
+
     W = U*X - B;
     for i = 1 : n
         %Obliczamy kolejne iteracje rozwi¹zania zgodnie z wzorem ze skryptu

@@ -1,5 +1,5 @@
-%Funkcja realizuje metodê propagacji wstecznej, u¿ywana jest przeze mnie w
-%algorytmie Cholesky'ego
+%Funkcja realizuje metodê propagacji wstecznej,
+%u¿ywana jest przeze mnie w algorytmie Cholesky'ego
 
 function [X] = backwards_Substitution(L,B)
 sz = size(B);
@@ -13,3 +13,5 @@ for  k = n -2 : -1 : 1
     X(k) = (B(k) - sum(L1.*X1'))/L(k,k);
 end
 return;
+
+

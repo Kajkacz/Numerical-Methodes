@@ -10,8 +10,6 @@ t1 = toc;
 t = toc;
 
 while(t - t1 <180 )
-    t1 = t;
-    t = toc;
     %Factorization of first set of data
     
     [ A , B ] = generateA(n);
@@ -37,10 +35,12 @@ while(t - t1 <180 )
     
     R3(1,i) = sqrt(sum((A*X -B).^2));
     R3(2,i) = n;
-    
+    disp(n);
     i = i+1;
-    n = 10*2^i;
-    disp(i);
+    n = 10*(2^(i-1));
+    
+    t1 = t;
+    t = toc;
     disp(t - t1);
 end
 
