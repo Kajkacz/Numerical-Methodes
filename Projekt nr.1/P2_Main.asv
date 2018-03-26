@@ -1,0 +1,11 @@
+n = 5; %Input value - number of equations
+
+%Factorization of first set of data
+
+[ A , B ] = generateA(n);
+
+L = Cholesky_Banachiewicz(A);
+
+Y = forward_Substitution(L,B);
+
+X = backwards_Substitution(L',Y);
