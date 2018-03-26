@@ -1,3 +1,6 @@
-n = 10;
 [ A , B ] = generateB(n);
-L = 
+[X,k] = Gauss_Seidel( A , B, 10, 0.001 );
+
+r = A*X - B ;
+
+disp(r);
