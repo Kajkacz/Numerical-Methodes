@@ -1,0 +1,30 @@
+\documentclass[a4paper, 11pt]{article}
+\author{Kajetan Kaczmarek}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+
+\begin{document}
+\title{Sprawozdanie MNUM \\* Projekt nr.1 \\* 
+Zadanie 1.1 \\*}
+\maketitle
+
+\begin{enumerate}
+
+\item Opis zastosowanych algorytmów : 
+\begin{enumerate}
+\item Do sprawdzenia dokładności maszynowej komputera wykorzystałem prosty algorytm dzielący liczbę 1 przez 2 przy każdej kolejnej iteracji tak długo aż nie była ona równa 0.Dla mojego komputera otrzymałem wynik 1076
+\item Przy drugim poleceniu wykorzystałem algorytm faktoryzacji Cholesky'ego Banachiewicza. Najpierw utworzyłem funkcje generateA, generateB oraz generateC, tworzące zbiory danych zgodnie z podanymi specyfikacjami.Następnie użyłem pomocniczych funkcji do faktoryzacji
+ Cholesky'ego zgodnie z podanymi wzorami 
+ \[ l_{ii} = \sqrt{a_{ii} - \sum_{ k = 1 }^{i-1}l^2_{ik} }  \]
+  oraz 
+ \[ l_{ji} =
+  \dfrac
+ { a_{ji} - \sum_{k=1}^{i-1}
+  l_{jk} \cdot l_{ik}}{l_{ii} } \]
+  Otrzymałem dzięki temu macierz która pomnożona przez swoją tranzpozycję odtworzy zadaną macierz A.
+\item
+\end{enumerate}
+\end{enumerate}
+\end{document}

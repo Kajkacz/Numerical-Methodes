@@ -1,3 +1,4 @@
+%Wrapper function of Seidel-Gauss problem
 [ A , B ] = generateB(n);
 [X,k] = Gauss_Seidel( A , B, 10, 0.001 );
 

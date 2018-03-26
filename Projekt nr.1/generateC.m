@@ -1,5 +1,4 @@
-
-%Third set of data
+%Generating set of data c)
 function [A,B] = generateC(n)
 
 A = zeros( n );

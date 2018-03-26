@@ -1,3 +1,6 @@
+%Funkcja realizuje metodê propagacji wstecznej, u¿ywana jest przeze mnie w
+%algorytmie Cholesky'ego
+
 function [X] = backwards_Substitution(L,B)
 sz = size(B);
 n = sz(1);

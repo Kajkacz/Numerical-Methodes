@@ -39,10 +39,12 @@ while(t - t1 <180 )
     R3(2,i) = n;
     
     i = i+1;
-    n = 10*i^2;
+    n = 10*2^i;
     disp(i);
     disp(t - t1);
 end
+
+%Display and plotting of results
 disp(R1);
 plot(R1(1),R1(2));
 plot(R2(1),R2(2));
