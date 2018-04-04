@@ -1,8 +1,9 @@
+
 x = 1;
 i = 1;
 
-%Program liczy w pêtli ile razy nale¿y podzieliæ liczbê przez 2 aby dla
-%komputera wynosi³a ona 0
+%Program liczy w pï¿½tli ile razy naleï¿½y podzieliï¿½ liczbï¿½ przez 2 aby dla
+%komputera wynosiï¿½a ona 0
 
 while(x ~= 0)
   x = x/2;
