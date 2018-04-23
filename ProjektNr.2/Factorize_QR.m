@@ -1,6 +1,6 @@
-function [Q,R] = Factorize_QR(A)
-%[Q,R] = qr(A);
-[m n]=size(A);
+function [Q,R] = Factorize_QR(A) %Funkcja realizująca faktoryzacje QR na macierzy A, zwracająca macierze Q i R
+[m, n]=size(A); % Zaczynamy od ocenienia rozmiaru A i inicjalizacji odpowiednich macierzy Q, R i pomocniczej d
+
 Q = zeros(m,n);
 R = zeros(n,n);
 d = zeros(1,n);
