@@ -1,0 +1,81 @@
+\documentclass[a4paper, 11pt]{article}
+\author{Kajetan Kaczmarek}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    basicstyle=\tiny,
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+
+
+\begin{document}
+\title{Sprawozdanie MNUM \\* Projekt nr.3 \\* 
+Zadanie 3.32 \\*}
+\maketitle
+
+\begin{enumerate}
+
+\item Opis zastosowanych algorytmów : 
+\begin{enumerate}
+\item W pierwszym zadaniu, tj. znalezienie zer dla funkcji \[f(x) = 0.5xcos(x) - ln(x) \] użyłem dwóch metod. Założeniami dla obywdu metod była a) ciągłość, co jest oczywiste dla ww. funkcji, oraz b) różne znaki na krańcach przedziału, do czego odnoszę się poniżej. Zastosowane metody : \begin{itemize} \, \item Metoda bisekcji \\* \, W metodzie bisekcji na początek liczony jest punkt wypadający pomiędzy podanymi wejściowymi punktami, tj. \( x = \dfrac{a+b}{2}\) dla p. wejściowych a i b. Następnie sprawdzamy czy punkt ten jest naszym zerem z podaną dokładnością eps, czyli czy \( |f(x)| < eps \). Jeśli tak jest kończymy wykonywanie algorytmu, jeśli nie to sprawdzamy warunek \( f(a) f(b) < 0 \) i w zależności od wyniku zastępujemy lewy lub prawy koniec przedziału w którym szukamy wyliczonym x, tak, aby krańce przedziału nadal miały przeciwne znaki. Alternatywnym warunkiem wyjściowym z pętli jest \( |a-b|<eps \), czyli zbliżenie się do siebie punktów a i b tak, że dalsze obliczenia są niemożliwe.
+\item Metoda Siecznych \\* Metoda siecznych jest podobna do metody bisekcji - szukamy zer przez zawężanie zakresu poszukiwań, warunki końcowe są więc takie same.Różny jest jednak algorytm wyznaczania kolejnego punktu : tutaj kolejne punkty wyznaczamy ze wzoru \[ x_i = x_{i-1} - f(x_{i-1})\dfrac{x_{i-1} - x_{i-2}}{f(x_{i-1}) - f(x_{i-2})} \]
+Tak że łączenie kolejnych punktów daje nam sieczne naszej funkcji f(x) i przybliża jej zera.
+\item Uwaga techniczna - założeniami obydwu metod są różne znaki funkcji na krańcach przedziału. Jako że warunek ten nie jest spełniony dla zadanego przedziału w mojej funkcji, a do tego ww. metody znajdują tylko jedno zero, podzieliłem zadany przedział [2,11] na dwa mniejsze , tj. [2,7] i [7,11] tak aby w każdym znajdowało się jedno zero, i aby spełniały one założenia metod.
+\end{itemize}
+\end{enumerate}
+
+\item Kod moich programów 
+\begin{itemize}
+\item Funkcja main dla pierwszego zadania \\*
+\lstinputlisting{P1_Main.m}
+\item Pomocnicza funkcja licząca wartości naszej funkcji podanej dla zadania \\*
+ \lstinputlisting{fzad.m}
+ \item Funkcja licząca zera funkcji metodą bisekcji
+ \lstinputlisting{bisect.m}
+ \item Funkcja licząca zera funkcji metodą siecznych
+ \lstinputlisting{secants.m}
+\end{itemize}
+\item
+Wyniki : 
+\begin{itemize}
+\item  Dla zadania pierwszego obydwie metody zwróciły zbliżone wyniki, tj.\\*
+\begin{center}
+
+	\begin{tabular}{ l*{2}{c}r}
+  \hline	
+	Metoda & Zero nr.1 & Zero nr. 2 \\ \hline
+    Metoda Bisekcji & 7.27703857421875	& 5.38775634765625	\\
+    Metoda Siecznych & 7.27702154631274	& 5.38773923503257 \\
+  \hline
+  \end{tabular}
+
+\end{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{Zad_1.jpg}
+\end{itemize}
+\item Wnioski : 
+\end{enumerate}
+\end{document}
+
