@@ -45,6 +45,11 @@ Zadanie 3.32 \\*}
 Tak że łączenie kolejnych punktów daje nam sieczne naszej funkcji f(x) i przybliża jej zera.
 \item Uwaga techniczna - założeniami obydwu metod są różne znaki funkcji na krańcach przedziału. Jako że warunek ten nie jest spełniony dla zadanego przedziału w mojej funkcji, a do tego ww. metody znajdują tylko jedno zero, podzieliłem zadany przedział [2,11] na dwa mniejsze , tj. [2,7] i [7,11] tak aby w każdym znajdowało się jedno zero, i aby spełniały one założenia metod.
 \end{itemize}
+\item W drugim zadaniu, tj. znalezienie zer wielomianu \( f(x) = 2x^4 + 5x^3 - 2x^2 +3x^3 +7 \) zastosowałem metody : 
+\begin{itemize}
+\item Metoda Newtona \, Metoda Newtona, zwana inaczej metodą stycznych , opiera się na wykorzystaniu iteracjnego wzoru \[ x_i = x_{i-1} - \dfrac{f(x)}{f(x)'} \]
+\item Metoda Mullera MM2
+\end{itemize}
 \end{enumerate}
 
 \item Kod moich programów 
@@ -57,6 +62,12 @@ Tak że łączenie kolejnych punktów daje nam sieczne naszej funkcji f(x) i prz
  \lstinputlisting{bisect.m}
  \item Funkcja licząca zera funkcji metodą siecznych
  \lstinputlisting{secants.m}
+  \item Funkcja main dla drugiego zadania
+ \lstinputlisting{P2_Main.m}
+   \item Funkcja licząca zera funkcji metodą Newtona
+ \lstinputlisting{newton.m}
+   \item Funkcja licząca zera funkcji metodą Mullera
+ \lstinputlisting{muller.m}
 \end{itemize}
 \item
 Wyniki : 

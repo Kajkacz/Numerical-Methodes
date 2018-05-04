@@ -1,10 +1,12 @@
-xb1 = bisect(11,7,10e-5); %Pierwsze zero funkcji metoda bisekcji
-xb2 = bisect(7,2,10e-5); %Drugie zero funkcji metoda bisekcji
+imax = 50;
 
-xs1 = secants(11,7,10e-5); %Pierwsze zero funkcji metoda siecznych
-xs2 = secants(7,2,10e-5); %Drugie zero funkcji metoda siecznych
+xb1 = bisect(11,7,10e-5,imax); %Pierwsze zero funkcji metoda bisekcji
+xb2 = bisect(7,2,10e-5,imax); %Drugie zero funkcji metoda bisekcji
 
-Ans = [xb1,xb2,xs1,xs2]; % Wektor z rozwiazaniami dla ulatwienia rysowania
+xs1 = secants(11,7,10e-5,imax); %Pierwsze zero funkcji metoda siecznych
+xs2 = secants(7,2,10e-5,imax); %Drugie zero funkcji metoda siecznych
+
+Ans = [xb1(imax - 1),xb2(imax - 1),xs1(imax - 1),xs2(imax - 1)]; % Wektor z rozwiazaniami dla ulatwienia rysowania
 
 X = 2:0.1:11; % Nasz przedzial z probkowaniem co 0.1
 Y = arrayfun(@(x) fzad(x),X); %Wyliczenie wartosci naszej funkcji do narysowania wykresu
