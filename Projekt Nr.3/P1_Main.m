@@ -12,8 +12,15 @@ X = 2:0.1:11; % Nasz przedzial z probkowaniem co 0.1
 Y = arrayfun(@(x) fzad(x),X); %Wyliczenie wartosci naszej funkcji do narysowania wykresu
 
 figure; % Ponizszy kod rysuje wykres
+hax = axes;
 plot(X,Y);% Rysowanie wykresu funkcji
 hold on;
 plot(Ans,0, '-o','MarkerEdgeColor','b','MarkerFaceColor',[0.5,0.5,0.5]); % Rysowanie miejsc zerowych
+hold on; 
+line([11 11],get(hax,'YLim'),'Color',[1 0 0])
+line([7 7],get(hax,'YLim'),'Color',[1 0 0])
+line([7 7],get(hax,'YLim'),'Color',[0 1 0])
+line([2 2],get(hax,'YLim'),'Color',[0 1 0])
+
 hold off;
 

@@ -1,6 +1,8 @@
-function X = newton(eps,x0, imax)
+function [X ,y]= newton(eps,x0, imax)
 
 X = zeros(imax -1 , 1);
+y = zeros(imax - 1,1);
+
 i = 1;
 
 % Dane wejściowe
@@ -12,6 +14,6 @@ while abs( polyval(A,x0)) > eps && i< imax
     %disp(x0 )
     x0 = x0 - (polyval(A,x0 )/polyval(B,x0 ));   
     X(i) = x0;
+    y(i)= polyval(A,x0);
     i = i+1;
 end
-X(imax-1) = x0;

@@ -1,4 +1,4 @@
-function [x] = muller(eps, x0, imax)
+function [x,y] = muller(eps, x0, imax)
 
 % Dane wejściowe
 A = [2 5 -2 3 7]; % Macierz wspolczynnikow wielominau
@@ -6,6 +6,7 @@ B = [8 15 -4 3]; % Macierz wspolczynnikow pochodnej wielomianu A
 C = [24 30 -4] ; % Macierz wspolczynnikow pochodnej drugiego stopnia wielomianu A
 
 x = zeros(imax - 1,1);
+y = zeros(imax - 1,1);
 i = 1;
 
 while abs(polyval(A,x0) ) > eps && i < imax
@@ -22,7 +23,6 @@ while abs(polyval(A,x0) ) > eps && i < imax
     end
     
     x(i)=x0;
-    
+    y(i)= polyval(A,x0);
     i= i +1;
 end
-x(imax - 1) = x0;
