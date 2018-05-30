@@ -1,12 +1,32 @@
-function y =RungyKutta(h,x,F,x1, x2)
-y = zeros(1,length(x)); 
-y(1) = 5;                                          % initial condition
+function [y1,y2] = RungyKutta(step,range,F1,F2,x1, x2)
+%%%%%%%%%%%%%%
+% step - step of RK algorithm
+% range - in our implementation 20 by default, implemented for the
+% solverness of solver
+% F1, F2 - our given differentials
+% x1, x2 - our given starting points
+%%%%%%%%%%%%%%
+y1(1) = x1;                               % initial condition
+y2(1) = x2;
 
-for i=1:(length(x)-1)                              % calculation loop
-    k_1 = F(x(i),y(i));
-    k_2 = F(x(i)+0.5*h,y(i)+0.5*h*k_1);
-    k_3 = F((x(i)+0.5*h),(y(i)+0.5*h*k_2));
-    k_4 = F((x(i)+h),(y(i)+k_3*h));
+max = 50;% range/step;
 
-    y(i+1) = y(i) + (1/6)*(k_1+2*k_2+2*k_3+k_4)*h;  % main equation
+for i=1:max                               % calculation loop
+
+    k_11 = F1(y1(i), y2(i));
+    k_21 = F2(y1(i), y2(i));
+
+    k_12 = F1(y1(i) + step * k_11/2, y2(i) + k_21/2 );
+    k_22 = F2(y1(i) + step/2, y2(i) + k_11/2 );
+    
+    k_13 = F1(y1(i) + step/2, y2(i) + k_12/2 );
+    k_23 = F2(y1(i) + step/2, y2(i) + k_12/2 );
+    
+    k_14 = F1(y1(i) + step , y2(i)+ k_13);
+    k_24 = F2(y1(i) + step , y2(i)+ k_13);
+    
+    
+    y1(i+1) = y1(i) + (1/6)*step*(k_11+2*k_12+2*k_13+k_14);  % main equation
+    y2(i+1) = y2(i) + (1/6)*step*(k_21+2*k_22+2*k_23+k_24);
+
 end
