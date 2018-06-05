@@ -1,0 +1,118 @@
+\documentclass[a4paper, 11pt]{article}
+\author{Kajetan Kaczmarek}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\graphicspath{{IMG/}} %Setting the graphicspath
+
+
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+
+
+\begin{document}
+\title{Sprawozdanie MNUM \\* Projekt nr.4 \\* 
+Zadanie 4.39 \\*}
+\maketitle
+
+\begin{enumerate}
+\item \*
+Zadane równania \[ x'_1 = x_2 + x_1(0,9 - x_1^2 - x_2^2) \] 
+\[ x'_2 = -x_1 + x_2(0,9 - x_1^2 - x_2^2) \]
+\item Opis zastosowanych algorytmów : 
+\begin{itemize}
+\item Runge-Kutta \\*
+W algorytmie tym wyliczamy kolejne punkty według wzoru :
+\[ y_{n+1} = y_n + \dfrac{1}{6}h(k_1 + 2k_2 + 2k_3 + k_4 )\] 
+gdzie parametry \( k_i \) mają następujące wartości : 
+\[k_1 = f(x_n, y_n)\]
+Czyli \(k_1 \) jest pochodną funkcji f w punkcie \((x_n, y_n)\)
+\[k_2 = f(x_n + \dfrac{1}{2}h , y_n +\dfrac{1}{2}hk_1 )\]
+Czyli wartość otrzymana przez użycie zmodyfikowanej metody Eulera w punkcie środkowym \( (x_n + 0.5h,y_n + 0.5hk_1)\)
+\[k_3 = f(x_n+\dfrac{1}{2}h , y_n + \dfrac{1}{2}hk_2 )\]
+Czyli podobnie jak punkt \(k_3\) z tym że zamiast punktu \(k_1\) używamy \(k_2\)  
+\[k_4 = f(x_n+h , y_n + hk_3)\]
+Czyli pochodna w punkcie końcowym naszego interwału \\*
+W ten sposób otrzymujemy 4 wartości pochodnych - dwie na krawędziach i dwie wewnątrz przedziału - a następnie liczymy ich ważoną średnią wg. ww. wzoru.
+\item Adams \\*
+W metodzie Adamsa zauważamy że nasz problem \[ y'(x) = f(x,y(x)), \] \[ y(a) = y_a , x\in [a,b] \] może być przekształcony i przedstawiony w formie równania \[ y(x) = y(a) + \int_{a}^{x} f(t,y(t)) dt,\] czyli dla naszego przedziału [$x_{n-1} , x_n $] daje to  \[ y(x_n) = y(x_{n-1}) + \int_{x_{n-1}}^{x_n} f(t,y(t)) dt\] 
+\begin{itemize}
+\item Metody Jawne \\*
+Funkcję podcałkową możemy przybliżyć wielomianem W(x) stopnia  k - 1 policzonego w punktach \( x_{n-1} , ... , x_{n-k}\).Używając przybliżenia Lagrange'a : \[ f(x,y(x)) \approx W(x) = \sum\limits_{j = 1}^k f(x_{n-j},y_{n-j})L_j(x)  \]
+ \[ y_n = y_{n-1} +  \sum\limits_{j = 1}^k f(x_{n-j},y_{n-j}) \int_{x_{n-1}}^{x_n}L_j(t)  dt\]
+ Gdzie
+ \[ L_j(x) = \prod\limits_{m=1,m\neq j}^k \dfrac{x - x_{n-m}}{x_{n-j} - x{n-m}} \]
+ Co po zcałkowaniu daje nam, przy załozeniu \( x_{n-1} = x_n - hj , j= 1,2,...,k \) , oraz użyciu wartości tablicowych \( \beta_j \)
+ \[ y_n = y_{n+1} + h\sum\limits_{j = 1}^k \beta_j f(x_{n-j},y_{n-j})\]
+ 
+ \item Metody niejawne \\* Funkcję podcałkową przybliżamy wielomianem interpolacyjnym stopnia co najwyżej k w punktach \( x_n , x_{n-1} , ... , x_{n-k} \) z odpowiadającymi wartościami \(y(x_{n-j}) \approx_{n-j}\), po czym używając analogicznej metody jak dla metody jawnej otzymujemy \[ y_n = y_{n-1} + h\sum\limits_{j = 0}^k  \beta_j^* f(x_{n-j},y_{n-j})   = y_{n-1} + \beta_0^* f(x_n,y_n) + h\sum\limits_{j = 1}^k  \beta_j^* f(x_{n-j},y_{n-j}) 		\]
+\end{itemize}
+\item Runge-Kutta ze zmiennym krokiem \\*
+Metoda przebiega analogicznie jak zwykły algorytm RK 4go stopnia, ale do tego przy kolejnych obrotach pętli wyliczamy wartości kroku
+\end{itemize}
+\item Kod Programów
+\begin{enumerate}
+\item Solver dla algoryutmu Rungego-Kutty ze stałym krokiem \*
+\lstinputlisting{RungyKutta.m}
+\item Solver dla metody Adamsa \*
+\lstinputlisting{Adams.m}
+\item Solver dla metody RK ze zmiennym krokiem \*
+\lstinputlisting{RungyKuttaStepCorrections.m}
+
+\end{enumerate}
+\item Wyniki
+\begin{itemize}
+\item Dla punktów startowych \(x_1 = 10\) \( x_2 = 8 \) wartość kroku optymalnego wyniosła 0.005 \\*
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4_1_0.005_0.01}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ODE_1_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ADAMS_1_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4errd_1_0.005_0.01}.png}
+
+\item Dla punktów startowych \(x_1 = 0\) \( x_2 = 9 \) wartość kroku optymalnego wyniosła 0.006 \\*
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4_2_0.006_0.012}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ODE_2_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ADAMS_2_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4err_2_0.006_0.012}.png}
+
+\item Dla punktów startowych \(x_1 = 8\) \( x_2 = 0 \) wartość kroku optymalnego wyniosła 0.008 \\*
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4_3_0.008_0.016}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ODE_3_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ADAMS_3_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4err_3_0.008_0.016}.png}
+
+\item Dla punktów startowych \(x_1 = 0.001\) \( x_2 = 0.001 \) wartość kroku optymalnego wyniosła 0.4 \\*
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4_4_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ODE_4_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{ADAMS_4_0.3_0.4}.png}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{{rk4err_4_0.3_0.4}.png}
+
+\end{itemize}
+
+\item Wnioski : \\*
+Przy odpowiednio krótkim kroku metody przeze mnie użyte były porównywalne z metodą ODE45 jeśli chodzi o dokładność otrzymanych wyników.Czas wykonania dla metody ODE45 to 0.1278, dla metody Adamsa -     0.1651 a dla metody RK - 0.2549.Widać więc że metoda ode45 jest zdecydowanie szybsza.Może być to wynik użycia nieoptymalnych wartości kroku.
+
+
+\end{enumerate}
+\end{document}
+

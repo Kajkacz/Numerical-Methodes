@@ -1,4 +1,4 @@
-function [y1,y2, err] = RungyKutta(step,range,F1,F2,x1, x2)
+function [y1,y2, err] = RungyKuttaStepCorrections(step,range,F1,F2,x1, x2, s, eps)
 %%%%%%%%%%%%%%
 % step - step of RK algorithm
 % range - in our implementation 20 by default, implemented for the
@@ -6,19 +6,23 @@ function [y1,y2, err] = RungyKutta(step,range,F1,F2,x1, x2)
 % F1, F2 - our given differentials
 % x1, x2 - our given starting points
 %%%%%%%%%%%%%%
-max = floor(range/step);                         % number of iterations
-
-errstep = step*0.5;                       % Substep for error calculation
-
-y1 = zeros(max,1);                        % output initialization
-y2 = zeros(max,1);
+minStep = 10e-8;
 
 y1(1) = x1;                               % initial condition
 y2(1) = x2;
 
+error = 0;
+sum = 0;
+
+order = 2;
+
 errY(:,1) = [x1,x2];                      % initial condition for error calculation
 
-for i=1:max                               % calculation loop
+i = 1;
+
+while(true)                               % calculation loop
+    
+    errstep = step*0.5;                   % Substep for error calculation
 
     k_11 = F1(0,[y1(i), y2(i)]);          % calculating Runge-Kutta factors
     k_21 = F2(0,[y1(i), y2(i)]);
@@ -38,7 +42,7 @@ for i=1:max                               % calculation loop
     
     errTemp(:,1) = errY(:,i);
     
-    for k = 1:2                         % calculating errors of methode
+    for k = 1:2                       % calculating errors of methode
         
         k_11 = F1(0,errTemp(:,k));
         k_21 = F2(0,errTemp(:,k));
@@ -56,12 +60,33 @@ for i=1:max                               % calculation loop
         errTemp(1,k+1) =errTemp(1,k)+ errstep*(k_11+2*k_12+2*k_13+k_14)/6; % main equation
         errTemp(2,k+1) =errTemp(2,k)+ errstep*(k_21+2*k_22+2*k_23+k_24)/6;
     end
- 
     errY(:,i + 1) = errTemp(:,3);
+    
+    err(1,i + 1) =  (16/15) *abs(errY(1,i + 1) - y1(i + 1));
+    err(2,i + 1)=  (16/15) *abs(errY(2,i + 1) - y2(i + 1));
+     
+    error = [err(1,i + 1) err(2,i + 1)];
+    
+    error = max(error(:));
+    
+    alpha =( eps / (abs(error))^(1/(order+1)));
+    newStep = step*s*alpha;
+    
+    sum = sum+step;
+    
+    if(s*alpha >= 1)
 
+    else
+        if(newStep>minStep)
+            step = newStep;
+        end
+    end
+    i=i+1;
+    if(sum>=range)
+        break
+    end
 end
 
-err(:,1) = (16/15) * abs(errY(1,:) - y1');
-err(:,2)= (16/15) * abs(errY(2,:) - y2');
 
+    
 end
