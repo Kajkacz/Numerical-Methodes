@@ -56,7 +56,7 @@ range = 20;
 
         title('Trajectory');
 
-        %savefig(['IMG\rk4_' int2str(i) '_' num2str(step1) '_' num2str(step2)  '.fig']);
+        savefig(['IMG\rk4_' int2str(i) '_' num2str(step1) '_' num2str(step2)  '.fig']);
 
         %f= openfig(['IMG\rk4_' int2str(i) '_' num2str(step1) '_' num2str(step2) '.fig']);
 
